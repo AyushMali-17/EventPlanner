@@ -51,20 +51,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('booking-form').addEventListener('submit', function(event) {
         event.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const eventType = document.getElementById('event-type').value;
-        const tickets = document.getElementById('tickets').value;
-        const specialRequests = document.getElementById('special-requests').value;
-        const time = document.getElementById('time').value;
-        const paymentMethod = document.getElementById('payment-method').value;
-        const cardDetails = document.getElementById('card-details').value;
+        showLoading(true);
+        setTimeout(() => {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const eventType = document.getElementById('event-type').value;
+            const tickets = document.getElementById('tickets').value;
+            const specialRequests = document.getElementById('special-requests').value;
+            const time = document.getElementById('time').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            const cardDetails = document.getElementById('card-details').value;
 
-        if (name && email && eventType && tickets && time && paymentMethod && (paymentMethod === 'credit-card' ? cardDetails : true)) {
-            showModal();
-        } else {
-            alert('Please fill in all required fields.');
-        }
+            if (name && email && eventType && tickets && time && paymentMethod && (paymentMethod === 'credit-card' ? cardDetails : true)) {
+                showModal();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+            showLoading(false);
+        }, 1000);
     });
 
     document.getElementById('payment-method').addEventListener('change', function(event) {
@@ -76,12 +80,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    document.getElementById('dark-mode-toggle').addEventListener('change', function() {
+        document.body.classList.toggle('dark-mode');
+        const elements = document.querySelectorAll('.dark-mode-toggle');
+        elements.forEach(el => el.classList.toggle('dark-mode'));
+    });
+
     function showModal() {
         const modal = document.getElementById('confirmation-modal');
         modal.style.display = "block";
         document.querySelector('.close-button').addEventListener('click', function() {
             modal.style.display = "none";
         });
+    }
+
+    function showLoading(display) {
+        const loader = document.getElementById('loading');
+        loader.style.display = display ? 'block' : 'none';
     }
 
     updateCalendar(currentMonth, currentYear);
