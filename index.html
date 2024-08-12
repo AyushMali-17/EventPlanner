@@ -18,11 +18,33 @@
         </div>
         <div id="calendar"></div>
         <form id="booking-form">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Your Email" required>
+            <input type="text" id="name" placeholder="Your Name" title="Enter your full name" required>
+            <input type="email" id="email" placeholder="Your Email" title="Enter a valid email address" required>
+            <select id="event-type" title="Select the type of event">
+                <option value="">Select Event Type</option>
+                <option value="concert">Concert</option>
+                <option value="class">Class</option>
+                <option value="conference">Conference</option>
+            </select>
+            <input type="number" id="tickets" placeholder="Number of Tickets" min="1" title="Number of attendees" required>
+            <textarea id="special-requests" placeholder="Special Requests" title="Any special requests?"></textarea>
+            <input type="time" id="time" required>
+            <select id="payment-method">
+                <option value="">Select Payment Method</option>
+                <option value="credit-card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="bitcoin">Bitcoin</option>
+            </select>
+            <input type="text" id="card-details" placeholder="Card Details" style="display:none;" required>
             <button type="submit">Book Event</button>
         </form>
     </main>
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>Thank you for your booking!</p>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

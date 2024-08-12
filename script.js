@@ -24,6 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('month-year').textContent = `${monthNames[month]} ${year}`;
     }
 
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('calendar-day')) {
+            document.querySelectorAll('.calendar-day').forEach(day => day.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+    });
+
     document.getElementById('prev-month').addEventListener('click', function() {
         currentMonth--;
         if (currentMonth < 0) {
@@ -46,12 +53,36 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
-        if (name && email) {
-            alert('Booking successful for ' + name);
+        const eventType = document.getElementById('event-type').value;
+        const tickets = document.getElementById('tickets').value;
+        const specialRequests = document.getElementById('special-requests').value;
+        const time = document.getElementById('time').value;
+        const paymentMethod = document.getElementById('payment-method').value;
+        const cardDetails = document.getElementById('card-details').value;
+
+        if (name && email && eventType && tickets && time && paymentMethod && (paymentMethod === 'credit-card' ? cardDetails : true)) {
+            showModal();
         } else {
-            alert('Please fill in all fields.');
+            alert('Please fill in all required fields.');
         }
     });
+
+    document.getElementById('payment-method').addEventListener('change', function(event) {
+        const paymentMethod = event.target.value;
+        if (paymentMethod === 'credit-card') {
+            document.getElementById('card-details').style.display = 'block';
+        } else {
+            document.getElementById('card-details').style.display = 'none';
+        }
+    });
+
+    function showModal() {
+        const modal = document.getElementById('confirmation-modal');
+        modal.style.display = "block";
+        document.querySelector('.close-button').addEventListener('click', function() {
+            modal.style.display = "none";
+        });
+    }
 
     updateCalendar(currentMonth, currentYear);
 });
